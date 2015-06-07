@@ -28,7 +28,8 @@
         "bukapeta/yii2-bukapeta-frontend": "dev-master",
         "2amigos/yii2-tinymce-widget" : "~1.1",
         "wbraganca/yii2-dynamicform": "*",
-        "dmstr/yii2-adminlte-asset": "2.*"
+        "dmstr/yii2-adminlte-asset": "2.*",
+        "kartik-v/yii2-field-range": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

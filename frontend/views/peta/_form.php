@@ -5,7 +5,8 @@ use yii\widgets\ActiveForm;
 
 use dosamigos\tinymce\TinyMce;
 use wbraganca\dynamicform\DynamicFormWidget;
-
+use kartik\widgets\SwitchInput;
+use kartik\widgets\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\Peta */
 /* @var $form yii\widgets\ActiveForm */
@@ -124,25 +125,61 @@ use wbraganca\dynamicform\DynamicFormWidget;
 
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Terbitkan</h3>
+                    <h3 class="panel-title">Terbitan</h3>
                 </div>
                 <div class="panel-body">
-                    <?= $form->field($model, 'terbitkan')->textInput() ?>
+                    
+                    <?php
+                        // Usage with ActiveForm and model and initial value set to true
+                        echo $form->field($model, 'terbitkan')->widget(SwitchInput::classname(), [
+                                'pluginOptions' => [
+                                    'labelText'=>'Status',
+                                    'onColor' => 'success',
+                                    'offColor' => 'danger',
+                                    'onText' => 'Terbit',
+                                    'offText' => 'Konsep',
+                                ],
+                                'pluginEvents' => [
+                                    "init.bootstrapSwitch" => "function(result) { 
+                                        console.log(result);
+                                    }",
+                                    "switchChange.bootstrapSwitch" => "function(result) { 
+                                        if (result.currentTarget.checked == false) {
+                                            console.log('No');
+                                        }else{
+                                            console.log('Yes');
+                                        }
+                                    }",
+                                ],
+                            ]);
+                    ?>
 
-                    <?= $form->field($model, 'tong_sampah')->textInput() ?>
-                </div>
-            </div>
+                    <?php
+                        // Usage with ActiveForm and model and initial value set to true
+                        /*echo $form->field($model, 'tong_sampah')->widget(SwitchInput::classname(), [
+                                'pluginOptions' => [
+                                    'labelText'=>'Status',
+                                    'onColor' => 'success',
+                                    'offColor' => 'danger',
+                                    'onText' => 'Yes',
+                                    'offText' => 'No',
+                                ],
+                                'pluginEvents' => [
+                                    "init.bootstrapSwitch" => "function(result) { 
+                                        console.log(result);
+                                    }",
+                                    "switchChange.bootstrapSwitch" => "function(result) { 
+                                        if (result.currentTarget.checked == false) {
+                                            console.log('No');
+                                        }else{
+                                            console.log('Yes');
+                                        }
+                                    }",
+                                ],
+                            ]);*/
+                    ?>
 
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Periode</h3>
-                </div>
-                <div class="panel-body">
-                    <?= $form->field($model, 'periode')->textInput() ?>
-
-                    <?= $form->field($model, 'waktu_mulai')->textInput() ?>
-
-                    <?= $form->field($model, 'waktu_berakhir')->textInput() ?>
+                    <?= Html::submitButton($model->isNewRecord ? 'Simpan' : 'Simpan', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                 </div>
             </div>
 
@@ -151,6 +188,26 @@ use wbraganca\dynamicform\DynamicFormWidget;
                     <h3 class="panel-title">Kategori</h3>
                 </div>
                 <div class="panel-body">
+                    <?php
+                        // Client validation of date-ranges when using with ActiveForm
+                        $form = ActiveForm::begin();
+                        echo '<label class="control-label">Periode</label>';
+                        echo DatePicker::widget([
+                            'model' => $model,
+                            'attribute' => 'waktu_mulai',
+                            'attribute2' => 'waktu_berakhir',
+                            'options' => ['placeholder' => 'Start date'],
+                            'options2' => ['placeholder' => 'End date'],
+                            'type' => DatePicker::TYPE_RANGE,
+                            'form' => $form,
+                            'pluginOptions' => [
+                                'format' => 'dd-M-yyyy',
+                                'autoclose' => true,
+                            ]
+                        ]);
+                        ActiveForm::end();
+                    ?>
+
                     <?= $form->field($model, 'id_jenis')->textInput() ?>
 
                     <?= $form->field($model, 'id_periode')->textInput() ?>

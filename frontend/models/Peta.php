@@ -70,7 +70,7 @@ class Peta extends \yii\db\ActiveRecord
             'event' => 'Event',
             'sumber' => 'Sumber',
             'tags' => 'Tags',
-            'terbitkan' => 'Terbitkan',
+            'terbitkan' => 'Konsep / Terbit',
             'tong_sampah' => 'Tong Sampah',
             'periode' => 'Periode',
             'waktu_mulai' => 'Waktu Mulai',
